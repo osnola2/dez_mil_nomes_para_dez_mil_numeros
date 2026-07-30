@@ -293,6 +293,47 @@
         <div class="vert-lang">
             <span class="vert-label">EO</span>
             <div class="vert-word-container"><div class="vert-word" id="wordEo">Nulo</div></div>
+        </div>
+        <div class="vert-lang">
+            <span class="vert-label">JA</span>
+            <div class="vert-word-container"><div class="vert-word" id="wordJa" style="text-transform: none;">零</div></div>
+        </div>
+        <div class="vert-lang">
+            <span class="vert-label">PL</span>
+            <div class="vert-word-container"><div class="vert-word" id="wordPl">Zero</div></div>
+        </div>
+        <div class="vert-lang">
+            <span class="vert-label">UK</span>
+            <div class="vert-word-container"><div class="vert-word" id="wordUk">Нуль</div></div>
+        </div>
+        <div class="vert-lang">
+            <span class="vert-label">CS</span>
+            <div class="vert-word-container"><div class="vert-word" id="wordCs">Nula</div></div>
+        </div>
+        <div class="vert-lang">
+            <span class="vert-label">HU</span>
+            <div class="vert-word-container"><div class="vert-word" id="wordHu">Nulla</div></div>
+        </div>
+        <div class="vert-lang">
+            <span class="vert-label">HI</span>
+            <div class="vert-word-container"><div class="vert-word" id="wordHi" style="text-transform: none;">शून्य</div></div>
+        </div>
+        <div class="vert-lang">
+            <span class="vert-label">BN</span>
+            <div class="vert-word-container"><div class="vert-word" id="wordBn" style="text-transform: none;">শূন্য</div></div>
+        </div>
+        <div class="vert-lang">
+            <span class="vert-label">TH</span>
+            <div class="vert-word-container"><div class="vert-word" id="wordTh" style="text-transform: none;">ศูนย์</div></div>
+        </div>
+        <div class="vert-lang">
+            <span class="vert-label">FA</span>
+            <div class="vert-word-container"><div class="vert-word" id="wordFa" style="text-transform: none;">صفر</div></div>
+        </div>
+        <div class="vert-lang">
+            <span class="vert-label">HE</span>
+            <div class="vert-word-container"><div class="vert-word" id="wordHe" style="text-transform: none;">אפס</div></div>
+        </div>
     </div>
     <div class="container">
         <div class="app-title-container" style="text-align: center; width: 100%; margin-bottom: 10px;">
@@ -381,6 +422,46 @@
         <div class="vert-lang">
             <span class="vert-label">Finlandês</span>
             <div class="vert-word-container"><div class="vert-word" id="wordFi">Nolla</div></div>
+        </div>
+        <div class="vert-lang">
+            <span class="vert-label">Norueguês</span>
+            <div class="vert-word-container"><div class="vert-word" id="wordNo">Null</div></div>
+        </div>
+        <div class="vert-lang">
+            <span class="vert-label">Dinamarquês</span>
+            <div class="vert-word-container"><div class="vert-word" id="wordDa">Nul</div></div>
+        </div>
+        <div class="vert-lang">
+            <span class="vert-label">Islandês</span>
+            <div class="vert-word-container"><div class="vert-word" id="wordIs">Núll</div></div>
+        </div>
+        <div class="vert-lang">
+            <span class="vert-label">Irlandês</span>
+            <div class="vert-word-container"><div class="vert-word" id="wordGa">Náid</div></div>
+        </div>
+        <div class="vert-lang">
+            <span class="vert-label">Basco</span>
+            <div class="vert-word-container"><div class="vert-word" id="wordEu">Zero</div></div>
+        </div>
+        <div class="vert-lang">
+            <span class="vert-label">Catalão</span>
+            <div class="vert-word-container"><div class="vert-word" id="wordCa">Zero</div></div>
+        </div>
+        <div class="vert-lang">
+            <span class="vert-label">Galego</span>
+            <div class="vert-word-container"><div class="vert-word" id="wordGl">Cero</div></div>
+        </div>
+        <div class="vert-lang">
+            <span class="vert-label">Malgaxe</span>
+            <div class="vert-word-container"><div class="vert-word" id="wordMg">Afo</div></div>
+        </div>
+        <div class="vert-lang">
+            <span class="vert-label">Maori</span>
+            <div class="vert-word-container"><div class="vert-word" id="wordMi">Kore</div></div>
+        </div>
+        <div class="vert-lang">
+            <span class="vert-label">Hawaiano</span>
+            <div class="vert-word-container"><div class="vert-word" id="wordHaw" style="text-transform: none;">ʻŌlelo</div></div>
         </div>
     </div>
 
@@ -523,27 +604,47 @@
             chiValEl.innerHTML = getAsianNumber(num, false);
 
             updateAllWordsSynchronized({
+                wordPt: numToPt(num),
                 wordEn: numToEn(num),
+                wordEs: numToEs(num),
                 wordIt: numToIt(num),
                 wordFr: numToFr(num),
                 wordDe: numToDe(num),
+                wordId: numToId(num),
+                wordTr: numToTr(num),
+                wordNl: numToNl(num),
+                wordSv: numToSv(num),
+                wordEo: numToEo(num),
+                wordJa: numToJa(num),
+                wordPl: numToPl(num),
+                wordUk: numToUk(num),
+                wordCs: numToCs(num),
+                wordHu: numToHu(num),
+                wordHi: numToHi(num),
+                wordBn: numToBn(num),
+                wordTh: numToTh(num),
+                wordFa: numToFa(num),
+                wordHe: numToHe(num),
                 wordAr: numToArabic(num),
                 wordKu: numToKu(num),
                 wordAm: numToAmharic(num),
                 wordRu: numToRu(num),
                 wordVi: numToVi(num),
-                wordId: numToId(num),
-                wordTr: numToTr(num),
                 wordEl: numToEl(num),
-                wordPt: numToPt(num),
-                wordEs: numToEs(num),
-                wordNl: numToNl(num),
-                wordSv: numToSv(num),
-                wordEo: numToEo(num),
                 wordSw: numToSw(num),
                 wordTl: numToTl(num),
                 wordLa: numToLa(num),
-                wordFi: numToFi(num)
+                wordFi: numToFi(num),
+                wordNo: numToNo(num),
+                wordDa: numToDa(num),
+                wordIs: numToIs(num),
+                wordGa: numToGa(num),
+                wordEu: numToEu(num),
+                wordCa: numToCa(num),
+                wordGl: numToGl(num),
+                wordMg: numToMg(num),
+                wordMi: numToMi(num),
+                wordHaw: numToHaw(num)
             });
         }
 
@@ -1093,6 +1194,438 @@
                 }
             }
             return parts.join("");
+        }
+
+        function numToJa(n) {
+            if (n === 0) return '<span class="word-o">零</span>';
+            const digits = ["", "一", "二", "三", "四", "五", "六", "七", "八", "九"];
+            let parts = [];
+            let th = Math.floor(n / 1000);
+            if (th > 0) parts.push(`<span class="word-th">${th === 1 ? "千" : (th === 3 ? "三千" : (th === 8 ? "八千" : digits[th] + "千"))}</span>`);
+            let h = Math.floor((n % 1000) / 100);
+            if (h > 0) parts.push(`<span class="word-h">${h === 1 ? "百" : (h === 3 ? "三百" : (h === 6 ? "六百" : (h === 8 ? "八百" : digits[h] + "百")))}</span>`);
+            let t = Math.floor((n % 100) / 10);
+            if (t > 0) parts.push(`<span class="word-t">${t === 1 ? "十" : digits[t] + "十"}</span>`);
+            let o = n % 10;
+            if (o > 0) parts.push(`<span class="word-o">${digits[o]}</span>`);
+            return parts.join("");
+        }
+
+        function numToPl(n) {
+            if (n === 0) return '<span class="word-o">zero</span>';
+            const ones = ["", "jeden", "dwa", "trzy", "cztery", "pięć", "sześć", "siedem", "osiem", "dziewięć", "dziesięć", "jedenaście", "dwanaście", "trzynaście", "czternaście", "piętnaście", "szesnaście", "siedemnaście", "osiemnaście", "dziewiętnaście"];
+            const tens = ["", "dziesięć", "dwadzieścia", "trzydzieści", "czterdzieści", "pięćdziesiąt", "sześćdziesiąt", "siedemdziesiąt", "osiemdziesiąt", "dziewięćdziesiąt"];
+            const hundreds = ["", "sto", "dwieście", "trzysta", "czterysta", "pięćset", "sześćset", "siedemset", "osiemset", "dziewięćset"];
+            let parts = [];
+            let th = Math.floor(n / 1000);
+            if (th > 0) {
+                let thStr = th === 1 ? "tysiąc" : ((th >= 2 && th <= 4) ? ones[th] + " tysiące" : ones[th] + " tysięcy");
+                parts.push(`<span class="word-th">${thStr}</span>`);
+            }
+            let h = Math.floor((n % 1000) / 100);
+            if (h > 0) parts.push(`<span class="word-h">${hundreds[h]}</span>`);
+            let rem = n % 100;
+            if (rem > 0) {
+                if (rem < 20) {
+                    if (rem < 10) parts.push(`<span class="word-o">${ones[rem]}</span>`);
+                    else parts.push(`<span class="word-t">${ones[rem]}</span>`);
+                } else {
+                    let o = rem % 10;
+                    let t = Math.floor(rem / 10);
+                    parts.push(`<span class="word-t">${tens[t]}</span>`);
+                    if (o > 0) parts.push(`<span class="word-o">${ones[o]}</span>`);
+                }
+            }
+            return parts.join(" ");
+        }
+
+        function numToUk(n) {
+            if (n === 0) return '<span class="word-o">нуль</span>';
+            const ones = ["", "один", "два", "три", "чотири", "п'ять", "шість", "сім", "вісім", "дев'ять"];
+            const elevens = ["десять", "одинадцять", "дванадцять", "тринадцять", "чотирнадцять", "п'ятнадцять", "шістнадцять", "сімнадцять", "вісімнадцять", "дев'ятнадцять"];
+            const tens = ["", "десять", "двадцять", "тридцять", "сорок", "п'ятдесят", "шістдесят", "сімдесят", "вісімдесят", "дев'яносто"];
+            const hundreds = ["", "сто", "двісті", "триста", "чотириста", "п'ятсот", "шістьсот", "сімсот", "вісімсот", "дев'ятьсот"];
+            let parts = [];
+            let th = Math.floor(n / 1000);
+            if (th > 0) {
+                let thStr = th === 1 ? "одна тисяча" : (th === 2 ? "дві тисячі" : ((th === 3 || th === 4) ? ones[th] + " тисячі" : ones[th] + " тисяч"));
+                parts.push(`<span class="word-th">${thStr}</span>`);
+            }
+            let h = Math.floor((n % 1000) / 100);
+            if (h > 0) parts.push(`<span class="word-h">${hundreds[h]}</span>`);
+            let rem = n % 100;
+            if (rem > 0) {
+                if (rem < 10) parts.push(`<span class="word-o">${ones[rem]}</span>`);
+                else if (rem < 20) parts.push(`<span class="word-t">${elevens[rem - 10]}</span>`);
+                else {
+                    let o = rem % 10;
+                    let t = Math.floor(rem / 10);
+                    parts.push(`<span class="word-t">${tens[t]}</span>`);
+                    if (o > 0) parts.push(`<span class="word-o">${ones[o]}</span>`);
+                }
+            }
+            return parts.join(" ");
+        }
+
+        function numToCs(n) {
+            if (n === 0) return '<span class="word-o">nula</span>';
+            const ones = ["", "jeden", "dva", "tři", "čtyři", "pět", "šest", "sedm", "osm", "devět", "deset", "jedenáct", "dvanáct", "třináct", "čtrnáct", "patnáct", "šestnáct", "sedmnáct", "osmnáct", "devatenáct"];
+            const tens = ["", "deset", "dvacet", "třicet", "čtyřicet", "padesát", "šedesát", "sedmdesát", "osmdesát", "devadesát"];
+            const hundreds = ["", "sto", "dvě stě", "tři sta", "čtyři sta", "pět set", "šest set", "sedm set", "osm set", "devět set"];
+            let parts = [];
+            let th = Math.floor(n / 1000);
+            if (th > 0) {
+                let thStr = th === 1 ? "tisíc" : ((th >= 2 && th <= 4) ? ones[th] + " tisíce" : ones[th] + " tisíc");
+                parts.push(`<span class="word-th">${thStr}</span>`);
+            }
+            let h = Math.floor((n % 1000) / 100);
+            if (h > 0) parts.push(`<span class="word-h">${hundreds[h]}</span>`);
+            let rem = n % 100;
+            if (rem > 0) {
+                if (rem < 20) {
+                    if (rem < 10) parts.push(`<span class="word-o">${ones[rem]}</span>`);
+                    else parts.push(`<span class="word-t">${ones[rem]}</span>`);
+                } else {
+                    let o = rem % 10;
+                    let t = Math.floor(rem / 10);
+                    parts.push(`<span class="word-t">${tens[t]}</span>`);
+                    if (o > 0) parts.push(`<span class="word-o">${ones[o]}</span>`);
+                }
+            }
+            return parts.join(" ");
+        }
+
+        function numToHu(n) {
+            if (n === 0) return '<span class="word-o">nulla</span>';
+            const ones = ["", "egy", "kettő", "három", "négy", "öt", "hat", "hét", "nyolc", "kilenc"];
+            const tens = ["", "tíz", "húsz", "harminc", "negyven", "ötven", "hatvan", "hetven", "nyolcvan", "kilencven"];
+            let parts = [];
+            let th = Math.floor(n / 1000);
+            if (th > 0) parts.push(`<span class="word-th">${th === 1 ? "ezer" : ones[th] + "ezer"}</span>`);
+            let h = Math.floor((n % 1000) / 100);
+            if (h > 0) parts.push(`<span class="word-h">${h === 1 ? "száz" : ones[h] + "száz"}</span>`);
+            let rem = n % 100;
+            if (rem > 0) {
+                let t = Math.floor(rem / 10);
+                let o = rem % 10;
+                if (t === 1 && o > 0) parts.push(`<span class="word-t">tizen</span><span class="word-o">${ones[o]}</span>`);
+                else if (t === 2 && o > 0) parts.push(`<span class="word-t">huszon</span><span class="word-o">${ones[o]}</span>`);
+                else {
+                    if (t > 0) parts.push(`<span class="word-t">${tens[t]}</span>`);
+                    if (o > 0) parts.push(`<span class="word-o">${ones[o]}</span>`);
+                }
+            }
+            return parts.join("");
+        }
+
+        function numToHi(n) {
+            if (n === 0) return '<span class="word-o">शून्य</span>';
+            const ones = ["", "एक", "दो", "तीन", "चार", "पांच", "छह", "सात", "आठ", "नौ"];
+            const tens = ["", "दस", "बीस", "तीस", "चालिस", "पचास", "साठ", "सत्तर", "अस्सी", "नब्बे"];
+            let parts = [];
+            let th = Math.floor(n / 1000);
+            if (th > 0) parts.push(`<span class="word-th">${ones[th]} हज़ार</span>`);
+            let h = Math.floor((n % 1000) / 100);
+            if (h > 0) parts.push(`<span class="word-h">${ones[h]} सौ</span>`);
+            let t = Math.floor((n % 100) / 10);
+            let o = n % 10;
+            if (t > 0) parts.push(`<span class="word-t">${tens[t]}</span>`);
+            if (o > 0) parts.push(`<span class="word-o">${ones[o]}</span>`);
+            return parts.join(" ");
+        }
+
+        function numToBn(n) {
+            if (n === 0) return '<span class="word-o">শূন্য</span>';
+            const ones = ["", "এক", "দুই", "তিন", "চার", "পাঁচ", "ছয়", "সাত", "আট", "নয়"];
+            const tens = ["", "দশ", "বিশ", "ত্রিশ", "চল্লিশ", "পঞ্চাশ", "ষাট", "সত্তর", "আশি", "নব্বই"];
+            let parts = [];
+            let th = Math.floor(n / 1000);
+            if (th > 0) parts.push(`<span class="word-th">${ones[th]} হাজার</span>`);
+            let h = Math.floor((n % 1000) / 100);
+            if (h > 0) parts.push(`<span class="word-h">${ones[h]} শত</span>`);
+            let t = Math.floor((n % 100) / 10);
+            let o = n % 10;
+            if (t > 0) parts.push(`<span class="word-t">${tens[t]}</span>`);
+            if (o > 0) parts.push(`<span class="word-o">${ones[o]}</span>`);
+            return parts.join(" ");
+        }
+
+        function numToTh(n) {
+            if (n === 0) return '<span class="word-o">ศูนย์</span>';
+            const ones = ["", "หนึ่ง", "สอง", "สาม", "สี่", "ห้า", "หก", "เจ็ด", "แปด", "เก้า"];
+            let parts = [];
+            let th = Math.floor(n / 1000);
+            if (th > 0) parts.push(`<span class="word-th">${ones[th]}พัน</span>`);
+            let h = Math.floor((n % 1000) / 100);
+            if (h > 0) parts.push(`<span class="word-h">${ones[h]}ร้อย</span>`);
+            let t = Math.floor((n % 100) / 10);
+            let o = n % 10;
+            if (t > 0) {
+                let tStr = t === 1 ? "สิบ" : (t === 2 ? "ยี่สิบ" : ones[t] + "สิบ");
+                parts.push(`<span class="word-t">${tStr}</span>`);
+            }
+            if (o > 0) {
+                let oStr = (o === 1 && t > 0) ? "เอ็ด" : ones[o];
+                parts.push(`<span class="word-o">${oStr}</span>`);
+            }
+            return parts.join("");
+        }
+
+        function numToFa(n) {
+            if (n === 0) return '<span class="word-o">صفر</span>';
+            const ones = ["", "یک", "دو", "سه", "چهار", "پنج", "شش", "هفت", "هشت", "نه"];
+            const elevens = ["ده", "یازده", "دوازده", "سیزده", "چهارده", "پانزده", "شانزده", "هفده", "هجده", "نوزده"];
+            const tens = ["", "ده", "بیست", "سی", "چهل", "پنجاه", "شصت", "هفتاد", "هشتاد", "نود"];
+            const hundreds = ["", "صد", "دویست", "سیصد", "چهارصد", "پانصد", "ششصد", "هفتصد", "هشتصد", "نهصد"];
+            let parts = [];
+            let th = Math.floor(n / 1000);
+            if (th > 0) parts.push(`<span class="word-th">${th === 1 ? "هزار" : ones[th] + " هزار"}</span>`);
+            let h = Math.floor((n % 1000) / 100);
+            if (h > 0) parts.push(`<span class="word-h">${hundreds[h]}</span>`);
+            let rem = n % 100;
+            if (rem > 0) {
+                if (rem < 10) parts.push(`<span class="word-o">${ones[rem]}</span>`);
+                else if (rem < 20) parts.push(`<span class="word-t">${elevens[rem - 10]}</span>`);
+                else {
+                    let o = rem % 10;
+                    let t = Math.floor(rem / 10);
+                    if (o > 0) parts.push(`<span class="word-t">${tens[t]}</span> و <span class="word-o">${ones[o]}</span>`);
+                    else parts.push(`<span class="word-t">${tens[t]}</span>`);
+                }
+            }
+            return parts.join(" و ");
+        }
+
+        function numToHe(n) {
+            if (n === 0) return '<span class="word-o">אפס</span>';
+            const ones = ["", "אחד", "שניים", "שלושה", "ארבעה", "חמישה", "שישה", "שבעה", "שמונה", "תשעה"];
+            const elevens = ["עשרה", "אחד עשר", "שניים עשר", "שלושה עשר", "ארבעה עשר", "חמישה עשר", "שישה עשר", "שבעה עשר", "שמונה עשר", "תשעה עשר"];
+            const tens = ["", "עשרה", "עשרים", "שלושים", "ארבעים", "חמישים", "שישים", "שבעים", "שמונהים", "תשעים"];
+            const hundreds = ["", "מאה", "מאתיים", "שלוש מאות", "ארבע מאות", "חמש מאות", "שש מאות", "שבע מאות", "שמונה מאות", "תשע מאות"];
+            let parts = [];
+            let th = Math.floor(n / 1000);
+            if (th > 0) parts.push(`<span class="word-th">${th === 1 ? "אלף" : (th === 2 ? "אלפיים" : ones[th] + " אלפים")}</span>`);
+            let h = Math.floor((n % 1000) / 100);
+            if (h > 0) parts.push(`<span class="word-h">${hundreds[h]}</span>`);
+            let rem = n % 100;
+            if (rem > 0) {
+                if (rem < 10) parts.push(`<span class="word-o">${ones[rem]}</span>`);
+                else if (rem < 20) parts.push(`<span class="word-t">${elevens[rem - 10]}</span>`);
+                else {
+                    let o = rem % 10;
+                    let t = Math.floor(rem / 10);
+                    if (o > 0) parts.push(`<span class="word-t">${tens[t]}</span> ו<span class="word-o">${ones[o]}</span>`);
+                    else parts.push(`<span class="word-t">${tens[t]}</span>`);
+                }
+            }
+            return parts.join(" ");
+        }
+
+        function numToNo(n) {
+            if (n === 0) return '<span class="word-o">null</span>';
+            const ones = ["", "en", "to", "tre", "fire", "fem", "seks", "sju", "åtte", "ni", "ti", "elleve", "tolv", "tretten", "fjorten", "femten", "seksten", "sytten", "atten", "nitten"];
+            const tens = ["", "", "tjue", "tredve", "førti", "femti", "seksti", "sytti", "åtti", "nitti"];
+            let parts = [];
+            let th = Math.floor(n / 1000);
+            if (th > 0) parts.push(`<span class="word-th">${th === 1 ? "ett tusen" : ones[th] + " tusen"}</span>`);
+            let h = Math.floor((n % 1000) / 100);
+            if (h > 0) parts.push(`<span class="word-h">${h === 1 ? "ett hundre" : ones[h] + " hundre"}</span>`);
+            let rem = n % 100;
+            if (rem > 0) {
+                if (rem < 20) {
+                    if (rem < 10) parts.push(`<span class="word-o">${ones[rem]}</span>`);
+                    else parts.push(`<span class="word-t">${ones[rem]}</span>`);
+                } else {
+                    let o = rem % 10;
+                    let t = Math.floor(rem / 10);
+                    if (o > 0) parts.push(`<span class="word-t">${tens[t]}</span><span class="word-o">${ones[o]}</span>`);
+                    else parts.push(`<span class="word-t">${tens[t]}</span>`);
+                }
+            }
+            return parts.join(" ");
+        }
+
+        function numToDa(n) {
+            if (n === 0) return '<span class="word-o">nul</span>';
+            const ones = ["", "en", "to", "tre", "fire", "fem", "seks", "syv", "otte", "ni", "ti", "elleve", "tolv", "tretten", "fjorten", "femten", "seksten", "sytten", "atten", "nitten"];
+            const tens = ["", "", "tyve", "tredive", "fyrre", "halvtreds", "tres", "halvfjerds", "firs", "halvfems"];
+            let parts = [];
+            let th = Math.floor(n / 1000);
+            if (th > 0) parts.push(`<span class="word-th">${th === 1 ? "et tusind" : ones[th] + " tusind"}</span>`);
+            let h = Math.floor((n % 1000) / 100);
+            if (h > 0) parts.push(`<span class="word-h">${h === 1 ? "et hundrede" : ones[h] + " hundrede"}</span>`);
+            let rem = n % 100;
+            if (rem > 0) {
+                if (rem < 20) {
+                    if (rem < 10) parts.push(`<span class="word-o">${ones[rem]}</span>`);
+                    else parts.push(`<span class="word-t">${ones[rem]}</span>`);
+                } else {
+                    let o = rem % 10;
+                    let t = Math.floor(rem / 10);
+                    if (o > 0) parts.push(`<span class="word-o">${ones[o]}</span>og<span class="word-t">${tens[t]}</span>`);
+                    else parts.push(`<span class="word-t">${tens[t]}</span>`);
+                }
+            }
+            return parts.join(" ");
+        }
+
+        function numToIs(n) {
+            if (n === 0) return '<span class="word-o">núll</span>';
+            const ones = ["", "einn", "tveir", "þrír", "fjórir", "fimm", "sex", "sjö", "átta", "níu", "tíu", "elfu", "tolv", "þrettán", "fjórtán", "fimmtán", "sextán", "sautján", "aðrtán", "nítján"];
+            const tens = ["", "", "tuttugu", "þrjátíu", "fjörutíu", "fimmtíu", "sextíu", "sjötíu", "áttatíu", "nÍutíu"];
+            let parts = [];
+            let th = Math.floor(n / 1000);
+            if (th > 0) parts.push(`<span class="word-th">${th === 1 ? "eitt þúsund" : ones[th] + " þúsund"}</span>`);
+            let h = Math.floor((n % 1000) / 100);
+            if (h > 0) parts.push(`<span class="word-h">${h === 1 ? "eitt hundrað" : ones[h] + " hundruð"}</span>`);
+            let rem = n % 100;
+            if (rem > 0) {
+                if (rem < 20) {
+                    if (rem < 10) parts.push(`<span class="word-o">${ones[rem]}</span>`);
+                    else parts.push(`<span class="word-t">${ones[rem]}</span>`);
+                } else {
+                    let o = rem % 10;
+                    let t = Math.floor(rem / 10);
+                    if (o > 0) parts.push(`<span class="word-t">${tens[t]}</span> og <span class="word-o">${ones[o]}</span>`);
+                    else parts.push(`<span class="word-t">${tens[t]}</span>`);
+                }
+            }
+            return parts.join(" ");
+        }
+
+        function numToGa(n) {
+            if (n === 0) return '<span class="word-o">náid</span>';
+            const ones = ["", "aon", "dó", "trí", "ceathair", "cúig", "sé", "seacht", "ocht", "naoi"];
+            let parts = [];
+            let th = Math.floor(n / 1000);
+            if (th > 0) parts.push(`<span class="word-th">${th === 1 ? "míle" : ones[th] + " mhíle"}</span>`);
+            let h = Math.floor((n % 1000) / 100);
+            if (h > 0) parts.push(`<span class="word-h">${h === 1 ? "céad" : ones[h] + " chéad"}</span>`);
+            let rem = n % 100;
+            if (rem > 0) {
+                let t = Math.floor(rem / 10);
+                let o = rem % 10;
+                let tStr = t === 1 ? "deich" : (t === 2 ? "fichoide" : (t === 3 ? "tríocha" : (t === 4 ? "daichead" : (t === 5 ? "caoga" : (t === 6 ? "seasca" : (t === 7 ? "seachtó" : (t === 8 ? "ochtó" : "nócha")))))));
+                if (t > 0) parts.push(`<span class="word-t">${tStr}</span>`);
+                if (o > 0) parts.push(`<span class="word-o">${ones[o]}</span>`);
+            }
+            return parts.join(" ");
+        }
+
+        function numToEu(n) {
+            if (n === 0) return '<span class="word-o">zero</span>';
+            const ones = ["", "bat", "bi", "hiru", "lau", "bost", "sei", "zazpi", "zortzi", "bider"];
+            const tens = ["", "hamar", "hogei", "hogeita hamar", "berrogei", "berrogeita hamar", "hirurogei", "hirurogeita hamar", "zortzirogei", "zortzirogeita hamar"];
+            let parts = [];
+            let th = Math.floor(n / 1000);
+            if (th > 0) parts.push(`<span class="word-th">${th === 1 ? "mila" : ones[th] + " mila"}</span>`);
+            let h = Math.floor((n % 1000) / 100);
+            if (h > 0) parts.push(`<span class="word-h">${h === 1 ? "ehun" : ones[h] + "ehun"}</span>`);
+            let rem = n % 100;
+            if (rem > 0) {
+                let t = Math.floor(rem / 10);
+                let o = rem % 10;
+                if (t > 0) parts.push(`<span class="word-t">${tens[t]}</span>`);
+                if (o > 0) parts.push(`<span class="word-o">${ones[o]}</span>`);
+            }
+            return parts.join(" ");
+        }
+
+        function numToCa(n) {
+            if (n === 0) return '<span class="word-o">zero</span>';
+            const ones = ["", "un", "dos", "tres", "quatre", "cinc", "sis", "set", "vuit", "nou", "deu", "onze", "dotze", "tretze", "catorze", "quinze", "setze", "disset", "divuit", "deneu"];
+            const tens = ["", "", "vaixell", "trenta", "quaranta", "cinquanta", "seixanta", "setanta", "vuitanta", "noranta"];
+            let parts = [];
+            let th = Math.floor(n / 1000);
+            if (th > 0) parts.push(`<span class="word-th">${th === 1 ? "mil" : ones[th] + " mil"}</span>`);
+            let h = Math.floor((n % 1000) / 100);
+            if (h > 0) parts.push(`<span class="word-h">${h === 1 ? "cent" : ones[h] + "-cents"}</span>`);
+            let rem = n % 100;
+            if (rem > 0) {
+                if (rem < 20) {
+                    if (rem < 10) parts.push(`<span class="word-o">${ones[rem]}</span>`);
+                    else parts.push(`<span class="word-t">${ones[rem]}</span>`);
+                } else {
+                    let o = rem % 10;
+                    let t = Math.floor(rem / 10);
+                    let tStr = t === 2 ? "vint" : tens[t];
+                    if (o > 0) parts.push(`<span class="word-t">${tStr}</span>-<span class="word-o">${ones[o]}</span>`);
+                    else parts.push(`<span class="word-t">${tStr}</span>`);
+                }
+            }
+            return parts.join(" ");
+        }
+
+        function numToGl(n) {
+            if (n === 0) return '<span class="word-o">cero</span>';
+            const ones = ["", "un", "dous", "tres", "catro", "cinco", "seis", "sete", "oito", "nove", "dez", "onze", "doce", "trece", "catorce", "quince", "dezaseis", "dezasete", "dezoito", "dezanove"];
+            const tens = ["", "", "vinte", "trinta", "corenta", "cincuenta", "sesenta", "setenta", "oitenta", "novembra"];
+            const hundreds = ["", "cento", "douscentos", "trescentos", "catrocentos", "quinhentos", "seiscentos", "setecentos", "oitocentos", "novecentos"];
+            let parts = [];
+            let th = Math.floor(n / 1000);
+            if (th > 0) parts.push(`<span class="word-th">${th === 1 ? "mil" : ones[th] + " mil"}</span>`);
+            let h = Math.floor((n % 1000) / 100);
+            let rem = n % 100;
+            if (h === 1 && rem === 0) parts.push('<span class="word-h">cen</span>');
+            else if (h > 0) parts.push(`<span class="word-h">${hundreds[h]}</span>`);
+            if (rem > 0) {
+                if (rem < 20) {
+                    if (rem < 10) parts.push(`<span class="word-o">${ones[rem]}</span>`);
+                    else parts.push(`<span class="word-t">${ones[rem]}</span>`);
+                } else {
+                    let o = rem % 10;
+                    let t = Math.floor(rem / 10);
+                    if (o === 0) parts.push(`<span class="word-t">${tens[t]}</span>`);
+                    else parts.push(`<span class="word-t">${tens[t]}</span> e <span class="word-o">${ones[o]}</span>`);
+                }
+            }
+            return parts.join(" e ");
+        }
+
+        function numToMg(n) {
+            if (n === 0) return '<span class="word-o">afo</span>';
+            const ones = ["", "iray", "roa", "telo", "efatra", "fOverlap", "enina", "fito", "valos", "sivy"];
+            const tens = ["", "folo", "roapolo", "telopolo", "efapolo", "dimiapolo", "eninapolo", "fitopolo", "valopolo", "sivypolo"];
+            let parts = [];
+            let o = n % 10;
+            let t = Math.floor((n % 100) / 10);
+            let h = Math.floor((n % 1000) / 100);
+            let th = Math.floor(n / 1000);
+            if (o > 0) parts.push(`<span class="word-o">${ones[o]}</span>`);
+            if (t > 0) parts.push(`<span class="word-t">${tens[t]}</span>`);
+            if (h > 0) parts.push(`<span class="word-h">${h === 1 ? "zato" : ones[h] + "jato"}</span>`);
+            if (th > 0) parts.push(`<span class="word-th">${th === 1 ? "arivo" : ones[th] + " alina"}</span>`);
+            return parts.join(" sy ");
+        }
+
+        function numToMi(n) {
+            if (n === 0) return '<span class="word-o">kore</span>';
+            const ones = ["", "tahi", "rua", "toru", "whā", "rima", "ono", "whitu", "waru", "iwa"];
+            let parts = [];
+            let th = Math.floor(n / 1000);
+            if (th > 0) parts.push(`<span class="word-th">${ones[th]} mano</span>`);
+            let h = Math.floor((n % 1000) / 100);
+            if (h > 0) parts.push(`<span class="word-h">${ones[h]} rau</span>`);
+            let t = Math.floor((n % 100) / 10);
+            let o = n % 10;
+            if (t > 0) parts.push(`<span class="word-t">${ones[t]} tekau</span>`);
+            if (o > 0) parts.push(`<span class="word-o">${ones[o]}</span>`);
+            return parts.join(" ");
+        }
+
+        function numToHaw(n) {
+            if (n === 0) return '<span class="word-o">ʻŌlelo</span>';
+            const ones = ["", "ʻakahi", "ʻalua", "ʻakolu", "ʻahā", "ʻalima", "ʻaono", "ʻahiku", "ʻawalu", "ʻaiwa"];
+            let parts = [];
+            let th = Math.floor(n / 1000);
+            if (th > 0) parts.push(`<span class="word-th">${ones[th]} kaukani</span>`);
+            let h = Math.floor((n % 1000) / 100);
+            if (h > 0) parts.push(`<span class="word-h">${ones[h]} hane</span>`);
+            let t = Math.floor((n % 100) / 10);
+            let o = n % 10;
+            if (t > 0) parts.push(`<span class="word-t">${ones[t]} kanahā</span>`);
+            if (o > 0) parts.push(`<span class="word-o">${ones[o]}</span>`);
+            return parts.join(" ");
         }
 
         function drawDigit(digit, startX, startY, xDir, yDir, w, h, strokeColor, glowColor) {

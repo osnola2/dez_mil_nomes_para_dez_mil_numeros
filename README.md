@@ -2,7 +2,7 @@
 
 > *"O Tao gerou o Um; o Um gerou o Dois; o Dois gerou o Três; e o Três gerou os dez mil seres."* — **Tao Te Ching**
 
-Uma aplicação web interativa e multilíngue que sintetiza a numeração dos **Numerais Cistercianos (0 a 9.999)** com a geração algorítmica por extenso em mais de **20 línguas e sistemas de escrita do mundo**.
+Uma aplicação web interativa e multilíngue que sintetiza a numeração dos **Numerais Cistercianos (0 a 9.999)** com a geração algorítmica por extenso em mais de **40 línguas e sistemas de escrita do mundo**.
 
 ---
 
@@ -14,7 +14,10 @@ Uma aplicação web interativa e multilíngue que sintetiza a numeração dos **
   * 🟡 **Centena (Amber / `#fbbf24`)**
   * 🟢 **Dezena (Emerald / `#34d399`)**
   * 🔵 **Unidade (Cyan / `#38bdf8`)**
-* **Texto Multilíngue por Extenso:** Suporte simultâneo para mais de 20 idiomas (Português, Inglês, Espanhol, Francês, Alemão, Italiano, Holandês, Sueco, Esperanto, Swahili, Tagalog, Latim, Finlandês, Árabe, Curdo, Amárico, Russo, Vietnamita, Indonésio, Turco, Grego, Coreano *Hangul* e Chinês *Hanzi*).
+* **Texto Multilíngue por Extenso em 41 Idiomas:** Suporte simultâneo e sincronizado para:
+  * **Américas & Europa:** Português, Inglês, Espanhol, Francês, Alemão, Italiano, Holandês, Sueco, Norueguês, Dinamarquês, Islandês, Polonês, Ucraniano, Tcheco, Húngaro, Finlandês, Grego, Russo, Latim, Catalão, Galego, Basco (*Euskara*), Gaélico Irlandês (*Gaeilge*) e Esperanto.
+  * **Oriente Médio & África:** Árabe, Curdo, Persa (*Farsi*), Hebraico, Swahili, Amárico e Malgaxe.
+  * **Ásia & Oceania:** Coreano (*Hangul*), Chinês (*Hanzi*), Japonês (*Kanji*), Hindi (*Devanagari*), Bengali, Tailandês, Indonésio, Tagalog, Maori e Hawaiano.
 * **Rolagem Sincronizada das Linguagens:** Animação de texto por extenso contínua em paralelo com botão de alternância para modo estático.
 * **Interatividade com o Mouse:** Navegação responsiva pelo quadro de numerais ao mover o cursor.
 
