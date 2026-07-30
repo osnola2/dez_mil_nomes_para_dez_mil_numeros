@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>dez mil nomes para dez mil coisas</title>
+    <style>
+        :root {
+            --bg: #0f172a;
+            --panel-bg: #1e293b;
+            --text: #f8fafc;
+            --accent: #38bdf8;
+            --stroke: #38bdf8;
+            --glow: 0 0 15px rgba(56, 189, 248, 0.5);
+        }
+
+        body {
+            margin: 0;
+            padding: 0 50px;
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: auto;
+            overflow-y: hidden;
+            gap: 50px;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            padding: 40px 60px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            border-radius: 16px;
+            background: var(--panel-bg);
+            border: 1px solid #334155;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .vertical-translations,
+        .vertical-translations-right {
+            display: flex;
+            gap: 15px;
+            height: 90vh;
+            align-items: center;
+        }
+
+        .vert-lang {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 85vh;
+        }
+
+        .vert-label {
+            font-size: 1.2rem;
+            color: var(--accent);
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            writing-mode: vertical-rl;
+            text-orientation: upright;
+            letter-spacing: 5px;
+            flex-shrink: 0;
+        }
+
+        .vert-word-container {
+            flex: 1;
+            overflow: hidden;
+            position: relative;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .vert-word {
+            font-size: 1.3rem;
+            color: #94a3b8;
+            writing-mode: vertical-rl;
+            text-orientation: upright;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
+            text-align: start;
+            white-space: nowrap;
+            position: relative;
+            transform: translateY(0);
+            will-change: transform;
+        }
+
+        /* Destaque colorido por grandeza no texto por extenso */
+        .word-th { color: #c084fc; text-shadow: 0 0 10px rgba(192, 132, 252, 0.6); font-weight: bold; }
+        .word-h  { color: #fbbf24; text-shadow: 0 0 10px rgba(251, 191, 36, 0.6); font-weight: bold; }
+        .word-t  { color: #34d399; text-shadow: 0 0 10px rgba(52, 211, 153, 0.6); font-weight: bold; }
+        .word-o  { color: #38bdf8; text-shadow: 0 0 10px rgba(56, 189, 248, 0.6); font-weight: bold; }
+
+        @keyframes fadeIn {
+            from { opacity: 0.1; }
+            to { opacity: 1; }
+        }
+
+        @keyframes scrollUpLoop {
+            0%, 15% {
+                transform: translateY(0);
+            }
+            100% {
+                transform: translateY(var(--scroll-y-exit));
+            }
+        }
+
+        .main-stage {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 50px;
+        }
+
+        canvas {
+            display: block;
+            cursor: crosshair;
+            background: rgba(0, 0, 0, 0.15);
+            border-radius: 12px;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .decimal-display {
+            font-size: 4rem;
+            font-weight: bold;
+            color: var(--accent);
+            text-shadow: var(--glow);
+            line-height: 1;
+        }
+
+        .binary-display {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            font-family: monospace;
+            font-size: 1.2rem;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px 25px;
+            border-radius: 8px;
+            color: #94a3b8;
+        }
+
+        .binary-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .bit-on {
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        .bit-off {
+            opacity: 0.3;
+        }
+
+        .side-panel {
+            font-size: 3.5rem;
+            color: #94a3b8;
+            writing-mode: vertical-rl;
+            text-orientation: upright;
+            letter-spacing: 10px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+            min-height: 400px;
+            text-align: center;
+        }
+
+        .controls {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .digit-controls {
+            display: flex;
+            gap: 30px;
+        }
+
+        .digit-col {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Cores distintas para cada grandeza */
+        .col-thousands .digit-label { color: #c084fc; text-shadow: 0 0 10px rgba(192, 132, 252, 0.4); }
+        .col-thousands button { border-color: #c084fc; color: #c084fc; }
+        .col-thousands button:hover { background: #c084fc; color: #0f172a; box-shadow: 0 0 15px rgba(192, 132, 252, 0.6); }
+
+        .col-hundreds .digit-label { color: #fbbf24; text-shadow: 0 0 10px rgba(251, 191, 36, 0.4); }
+        .col-hundreds button { border-color: #fbbf24; color: #fbbf24; }
+        .col-hundreds button:hover { background: #fbbf24; color: #0f172a; box-shadow: 0 0 15px rgba(251, 191, 36, 0.6); }
+
+        .col-tens .digit-label { color: #34d399; text-shadow: 0 0 10px rgba(52, 211, 153, 0.4); }
+        .col-tens button { border-color: #34d399; color: #34d399; }
+        .col-tens button:hover { background: #34d399; color: #0f172a; box-shadow: 0 0 15px rgba(52, 211, 153, 0.6); }
+
+        .col-ones .digit-label { color: #38bdf8; text-shadow: 0 0 10px rgba(56, 189, 248, 0.4); }
+        .col-ones button { border-color: #38bdf8; color: #38bdf8; }
+        .col-ones button:hover { background: #38bdf8; color: #0f172a; box-shadow: 0 0 15px rgba(56, 189, 248, 0.6); }
+
+        .digit-label {
+            font-size: 0.9rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        button {
+            background: #334155;
+            color: #f8fafc;
+            border: 1px solid #38bdf8;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: bold;
+            font-size: 1.2rem;
+            transition: 0.2s;
+            width: 100%;
+        }
+
+        .mouse-toggle {
+            color: #94a3b8;
+            font-size: 0.95rem;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="vertical-translations">
+        <div class="vert-lang">
+            <span class="vert-label">PT</span>
+            <div class="vert-word-container"><div class="vert-word" id="wordPt">Zero</div></div>
+        </div>
+        <div class="vert-lang">
+            <span class="vert-label">EN</span>
+            <div class="vert-word-container"><div class="vert-word" id="wordEn">Zero</div></div>
+        </div>
+        <div class="vert-lang">
+            <span class="vert-label">ES</span>
+            <div class="vert-word-container"><div class="vert-word" id="wordEs">Cero</div></div>
+        </div>
+        <div class="vert-lang">
+            <span class="vert-label">IT</span>
+            <div class="vert-word-container"><div class="vert-word" id="wordIt">Zero</div></div>
+        </div>
+        <div class="vert-lang">
+            <span class="vert-label">FR</span>
+            <div class="vert-word-container"><div class="vert-word" id="wordFr">Zéro</div></div>
+        </div>
+        <div class="vert-lang">
+            <span class="vert-label">DE</span>
+            <div class="vert-word-container"><div class="vert-word" id="wordDe">Null</div></div>
+        </div>
+        <div class="vert-lang">
+            <span class="vert-label">ID</span>
+            <div class="vert-word-container"><div class="vert-word" id="wordId">Nol</div></div>
+        </div>
+        <div class="vert-lang">
+            <span class="vert-label">TR</span>
+            <div class="vert-word-container"><div class="vert-word" id="wordTr">Sıfır</div></div>
+        </div>
+        <div class="vert-lang">
+            <span class="vert-label">NL</span>
+            <div class="vert-word-container"><div class="vert-word" id="wordNl">Nul</div></div>
+        </div>
+        <div class="vert-lang">
+            <span class="vert-label">SV</span>
+            <div class="vert-word-container"><div class="vert-word" id="wordSv">Noll</div></div>
+        </div>
+        <div class="vert-lang">
+            <span class="vert-label">EO</span>
+            <div class="vert-word-container"><div class="vert-word" id="wordEo">Nulo</div></div>
+    </div>
+    <div class="container">
+        <div class="app-title-container" style="text-align: center; width: 100%; margin-bottom: 10px;">
+            <h1 style="margin: 0; font-size: 2.2rem; font-weight: 800; letter-spacing: 2px; background: linear-gradient(135deg, #38bdf8, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">dez mil nomes para dez mil coisas</h1>
+            <div style="font-size: 0.85rem; color: #94a3b8; margin-top: 6px; letter-spacing: 1.5px; text-transform: uppercase;">萬物萬名 — Sistema Cisterciano &amp; Multilíngue (0 a 9999)</div>
+        </div>
+        <div class="header">
+            <div class="decimal-display" id="decVal">0</div>
+            <div class="binary-display" id="binVal">
+                <!-- Bits renderizados via JS -->
+            </div>
+        </div>
+
+        <div class="main-stage">
+            <div class="side-panel" id="korVal">영</div>
+            <canvas id="cistercianCanvas" width="500" height="500"></canvas>
+            <div class="side-panel" id="chiVal">零</div>
+        </div>
+
+        <div class="controls">
+            <div class="digit-controls">
+                <div class="digit-col col-thousands">
+                    <button onclick="cycleDigit(1000, 1)">▲</button>
+                    <span class="digit-label">Milhar</span>
+                    <button onclick="cycleDigit(1000, -1)">▼</button>
+                </div>
+                <div class="digit-col col-hundreds">
+                    <button onclick="cycleDigit(100, 1)">▲</button>
+                    <span class="digit-label">Centena</span>
+                    <button onclick="cycleDigit(100, -1)">▼</button>
+                </div>
+                <div class="digit-col col-tens">
+                    <button onclick="cycleDigit(10, 1)">▲</button>
+                    <span class="digit-label">Dezena</span>
+                    <button onclick="cycleDigit(10, -1)">▼</button>
+                </div>
+                <div class="digit-col col-ones">
+                    <button onclick="cycleDigit(1, 1)">▲</button>
+                    <span class="digit-label">Unidade</span>
+                    <button onclick="cycleDigit(1, -1)">▼</button>
+                </div>
+            </div>
+            <div class="mouse-toggle" style="display: flex; gap: 20px; align-items: center; justify-content: center;">
+                <label style="cursor: pointer;"><input type="checkbox" id="mouseModeToggle" checked> Seguir mouse no quadro</label>
+                <label style="cursor: pointer;"><input type="checkbox" id="scrollModeToggle" checked> Rolagem automática do texto</label>
+            </div>
+        </div>
+    </div>
+    <div class="vertical-translations-right">
+        <div class="vert-lang">
+            <span class="vert-label">Árabe</span>
+            <div class="vert-word-container"><div class="vert-word" id="wordAr" style="text-transform: none;">صفر</div></div>
+        </div>
+        <div class="vert-lang">
+            <span class="vert-label">Curdo</span>
+            <div class="vert-word-container"><div class="vert-word" id="wordKu" style="text-transform: none;">سفر</div></div>
+        </div>
+        <div class="vert-lang">
+            <span class="vert-label">Amárico</span>
+            <div class="vert-word-container"><div class="vert-word" id="wordAm" style="text-transform: none;">ዜሮ</div></div>
+        </div>
+        <div class="vert-lang">
+            <span class="vert-label">Russo</span>
+            <div class="vert-word-container"><div class="vert-word" id="wordRu">Ноль</div></div>
+        </div>
+        <div class="vert-lang">
+            <span class="vert-label">Vietnamita</span>
+            <div class="vert-word-container"><div class="vert-word" id="wordVi">Không</div></div>
+        </div>
+        <div class="vert-lang">
+            <span class="vert-label">Grego</span>
+            <div class="vert-word-container"><div class="vert-word" id="wordEl">Μηδέν</div></div>
+        </div>
+        <div class="vert-lang">
+            <span class="vert-label">Swahili</span>
+            <div class="vert-word-container"><div class="vert-word" id="wordSw">Sifuri</div></div>
+        </div>
+        <div class="vert-lang">
+            <span class="vert-label">Tagalog</span>
+            <div class="vert-word-container"><div class="vert-word" id="wordTl">Wala</div></div>
+        </div>
+        <div class="vert-lang">
+            <span class="vert-label">Latim</span>
+            <div class="vert-word-container"><div class="vert-word" id="wordLa">Nihil</div></div>
+        </div>
+        <div class="vert-lang">
+            <span class="vert-label">Finlandês</span>
+            <div class="vert-word-container"><div class="vert-word" id="wordFi">Nolla</div></div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('cistercianCanvas');
+        const ctx = canvas.getContext('2d');
+        const decValEl = document.getElementById('decVal');
+        const binValEl = document.getElementById('binVal');
+        const korValEl = document.getElementById('korVal');
+        const chiValEl = document.getElementById('chiVal');
+        const mouseModeToggle = document.getElementById('mouseModeToggle');
+        const scrollModeToggle = document.getElementById('scrollModeToggle');
+
+        let currentNumber = 0;
+        let lastWordMap = null;
+
+        function getAsianNumber(num, isKorean) {
+            if (num === 0) return isKorean ? '<span class="word-o">영</span>' : '<span class="word-o">零</span>';
+
+            const digitsK = ["", "일", "이", "삼", "사", "오", "육", "칠", "팔", "구"];
+            const weightsK = ["", "십", "백", "천"];
+
+            const digitsC = ["", "一", "二", "三", "四", "五", "六", "七", "八", "九"];
+            const weightsC = ["", "十", "百", "千"];
+
+            const digits = isKorean ? digitsK : digitsC;
+            const weights = isKorean ? weightsK : weightsC;
+            const classNames = ["word-o", "word-t", "word-h", "word-th"];
+
+            let res = "";
+            let strNum = num.toString();
+            let len = strNum.length;
+
+            for (let i = 0; i < len; i++) {
+                let digit = parseInt(strNum[i]);
+                let pos = len - 1 - i;
+
+                if (digit !== 0) {
+                    let digitChar = digits[digit];
+                    if (isKorean && digit === 1 && pos > 0) digitChar = "";
+                    if (!isKorean && digit === 1 && pos === 1 && len === 2) digitChar = "";
+                    res += `<span class="${classNames[pos]}">${digitChar}${weights[pos]}</span>`;
+                } else {
+                    if (!isKorean && res.length > 0 && !res.endsWith("零</span>") && pos > 0) {
+                        let hasNonZero = false;
+                        for (let j = i + 1; j < len; j++) {
+                            if (strNum[j] !== '0') { hasNonZero = true; break; }
+                        }
+                        if (hasNonZero) res += `<span class="word-o">零</span>`;
+                    }
+                }
+            }
+            return res;
+        }
+
+        function updateAllWordsSynchronized(wordMap, forceToggle = false) {
+            if (wordMap) lastWordMap = wordMap;
+            else wordMap = lastWordMap;
+
+            if (!wordMap) return;
+
+            let changed = false;
+
+            // 1. Atualiza o HTML dos elementos que mudaram
+            for (const id in wordMap) {
+                const el = document.getElementById(id);
+                if (el && el.innerHTML !== wordMap[id]) {
+                    el.innerHTML = wordMap[id];
+                    changed = true;
+                }
+            }
+
+            if (!changed && !forceToggle) return;
+
+            // 2. Reseta a posição e a animação de todas as colunas de idioma
+            const allElements = [];
+            for (const id in wordMap) {
+                const el = document.getElementById(id);
+                if (el) {
+                    el.style.animation = 'none';
+                    el.style.transform = 'translateY(0)';
+                    allElements.push(el);
+                }
+            }
+
+            // Se a opção de rolagem automática estiver desativada, exibe apenas a parte estática que cabe na tela
+            if (!scrollModeToggle.checked) {
+                return;
+            }
+
+            // Força o reflow sincronizado em todo o documento
+            void document.body.offsetHeight;
+
+            // 3. Encontra a maior distância de deslocamento entre TODAS as línguas (curtas ou longas)
+            let maxDistance = 0;
+            allElements.forEach(el => {
+                const container = el.parentElement;
+                const containerH = container ? container.clientHeight : 500;
+                const dist = Math.max(el.scrollHeight, containerH) + 35;
+                if (dist > maxDistance) maxDistance = dist;
+            });
+
+            // 4. Aplica a mesma animação e velocidade unificadas a TODAS as colunas se a rolagem estiver ativada
+            const unifiedDuration = Math.max(5, maxDistance / 35);
+            allElements.forEach(el => {
+                el.style.setProperty('--scroll-y-exit', `-${maxDistance}px`);
+                el.style.animation = `scrollUpLoop ${unifiedDuration}s linear infinite, fadeIn 0.4s ease-out`;
+            });
+        }
+
+        scrollModeToggle.addEventListener('change', () => {
+            updateAllWordsSynchronized(null, true);
+        });
+
+        function renderHUD(num) {
+            decValEl.innerText = num;
+
+            // Binary display (4 grupos de 4 bits com cores por grandeza)
+            const groupColors = ['#c084fc', '#fbbf24', '#34d399', '#38bdf8']; // Milhar, Centena, Dezena, Unidade
+            let binStr = num.toString(2).padStart(16, '0');
+            let html = '';
+            for (let g = 0; g < 4; g++) {
+                html += '<div class="binary-group">';
+                for (let b = 0; b < 4; b++) {
+                    let bitIndex = (g * 4) + b;
+                    let bit = binStr[bitIndex];
+                    let style = bit === '1' ? `color: ${groupColors[g]}; font-weight: bold; text-shadow: 0 0 8px ${groupColors[g]};` : 'opacity: 0.3;';
+                    html += `<span style="${style}">${bit}</span>`;
+                }
+                html += '</div>';
+            }
+            binValEl.innerHTML = html;
+
+            korValEl.innerHTML = getAsianNumber(num, true);
+            chiValEl.innerHTML = getAsianNumber(num, false);
+
+            updateAllWordsSynchronized({
+                wordEn: numToEn(num),
+                wordIt: numToIt(num),
+                wordFr: numToFr(num),
+                wordDe: numToDe(num),
+                wordAr: numToArabic(num),
+                wordKu: numToKu(num),
+                wordAm: numToAmharic(num),
+                wordRu: numToRu(num),
+                wordVi: numToVi(num),
+                wordId: numToId(num),
+                wordTr: numToTr(num),
+                wordEl: numToEl(num),
+                wordPt: numToPt(num),
+                wordEs: numToEs(num),
+                wordNl: numToNl(num),
+                wordSv: numToSv(num),
+                wordEo: numToEo(num),
+                wordSw: numToSw(num),
+                wordTl: numToTl(num),
+                wordLa: numToLa(num),
+                wordFi: numToFi(num)
+            });
+        }
+
+        function numToPt(n) {
+            if (n === 0) return '<span class="word-o">zero</span>';
+            const ones = ["", "um", "dois", "três", "quatro", "cinco", "seis", "sete", "oito", "nove", "dez", "onze", "doze", "treze", "quatorze", "quinze", "dezesseis", "dezessete", "dezoito", "dezenove"];
+            const tens = ["", "", "vinte", "trinta", "quarenta", "cinquenta", "sessenta", "setenta", "oitenta", "noventa"];
+            const hundreds = ["", "cento", "duzentos", "trezentos", "quatrocentos", "quinhentos", "seiscentos", "setecentos", "oitocentos", "novecentos"];
+            let parts = [];
+            let th = Math.floor(n / 1000);
+            if (th > 0) parts.push(`<span class="word-th">${th === 1 ? "mil" : ones[th] + " mil"}</span>`);
+            let h = Math.floor((n % 1000) / 100);
+            let rem = n % 100;
+            if (h === 1 && rem === 0) parts.push('<span class="word-h">cem</span>');
+            else if (h > 0) parts.push(`<span class="word-h">${hundreds[h]}</span>`);
+            if (rem > 0) {
+                if (rem < 20) {
+                    if (rem < 10) parts.push(`<span class="word-o">${ones[rem]}</span>`);
+                    else parts.push(`<span class="word-t">${ones[rem]}</span>`);
+                } else {
+                    let o = rem % 10;
+                    let t = Math.floor(rem / 10);
+                    if (o === 0) parts.push(`<span class="word-t">${tens[t]}</span>`);
+                    else parts.push(`<span class="word-t">${tens[t]}</span> e <span class="word-o">${ones[o]}</span>`);
+                }
+            }
+            return parts.join(" e ");
+        }
+
+        function numToEs(n) {
+            if (n === 0) return '<span class="word-o">cero</span>';
+            const ones = ["", "uno", "dos", "tres", "cuatro", "cinco", "seis", "siete", "ocho", "nueve"];
+            const elevens = ["diez", "once", "doce", "trece", "catorce", "quince", "diecisiete", "dieciocho", "diecinueve", 
+                           "veinte", "veintiún", "veintidós", "veintitrés", "veinticuatro", "veinticinco", "veintiséis", "veintisiete", "veintiocho", "veintinueve"];
+            const tens = ["", "", "veinte", "treinta", "cuarenta", "cincuenta", "sesenta", "setenta", "ochenta", "noventa"];
+            const hundreds = ["", "ciento", "doscientos", "trescientos", "cuatrocientos", "quinientos", "seiscientos", "setecientos", "ochocientos", "novecientos"];
+            let parts = [];
+            let th = Math.floor(n / 1000);
+            if (th > 0) parts.push(`<span class="word-th">${th === 1 ? "mil" : ones[th] + " mil"}</span>`);
+            let h = Math.floor((n % 1000) / 100);
+            let rem = n % 100;
+            if (h === 1 && rem === 0) parts.push('<span class="word-h">cien</span>');
+            else if (h > 0) parts.push(`<span class="word-h">${hundreds[h]}</span>`);
+            if (rem > 0) {
+                if (rem < 30) {
+                    if (rem === 21) parts.push('<span class="word-t">veintiuno</span>');
+                    else if (rem < 10) parts.push(`<span class="word-o">${ones[rem]}</span>`);
+                    else parts.push(`<span class="word-t">${elevens[rem - 10]}</span>`);
+                } else {
+                    let o = rem % 10;
+                    let t = Math.floor(rem / 10);
+                    if (o === 0) parts.push(`<span class="word-t">${tens[t]}</span>`);
+                    else parts.push(`<span class="word-t">${tens[t]}</span> y <span class="word-o">${ones[o]}</span>`);
+                }
+            }
+            return parts.join(" ");
+        }
+
+        function numToNl(n) {
+            if (n === 0) return '<span class="word-o">nul</span>';
+            const ones = ["", "een", "twee", "drie", "vier", "vijf", "zes", "zeven", "acht", "negen", "tien", "elf", "twaalf", "dertien", "veertien", "vijftien", "zestien", "zeventien", "achttien", "negentien"];
+            const tens = ["", "", "twintig", "dertig", "veertig", "vijftig", "zestig", "zeventig", "tachtig", "negentig"];
+            let parts = [];
+            let th = Math.floor(n / 1000);
+            if (th > 0) parts.push(`<span class="word-th">${th === 1 ? "duizend" : ones[th] + "duizend"}</span>`);
+            let h = Math.floor((n % 1000) / 100);
+            if (h > 0) parts.push(`<span class="word-h">${ones[h]}honderd</span>`);
+            let rem = n % 100;
+            if (rem > 0) {
+                if (rem < 20) {
+                    if (rem < 10) parts.push(`<span class="word-o">${ones[rem]}</span>`);
+                    else parts.push(`<span class="word-t">${ones[rem]}</span>`);
+                } else {
+                    let o = rem % 10;
+                    let t = Math.floor(rem / 10);
+                    if (o > 0) parts.push(`<span class="word-o">${ones[o]}</span>${o === 2 || o === 3 ? "ën" : "en"}<span class="word-t">${tens[t]}</span>`);
+                    else parts.push(`<span class="word-t">${tens[t]}</span>`);
+                }
+            }
+            return parts.join("");
+        }
+
+        function numToSv(n) {
+            if (n === 0) return '<span class="word-o">noll</span>';
+            const ones = ["", "ett", "två", "tre", "fyra", "fem", "sex", "sju", "åtta", "nio", "tio", "elva", "tolv", "tretton", "fjorton", "femton", "sexton", "sjutton", "arton", "nitton"];
+            const tens = ["", "", "tjugo", "trettio", "fyrtio", "femtio", "sextio", "sjuttio", "åttio", "nittio"];
+            let parts = [];
+            let th = Math.floor(n / 1000);
+            if (th > 0) parts.push(`<span class="word-th">${th === 1 ? "ettusen" : ones[th] + "tusen"}</span>`);
+            let h = Math.floor((n % 1000) / 100);
+            if (h > 0) parts.push(`<span class="word-h">${h === 1 ? "etthundra" : ones[h] + "hundra"}</span>`);
+            let rem = n % 100;
+            if (rem > 0) {
+                if (rem < 20) {
+                    if (rem < 10) parts.push(`<span class="word-o">${ones[rem]}</span>`);
+                    else parts.push(`<span class="word-t">${ones[rem]}</span>`);
+                } else {
+                    let o = rem % 10;
+                    let t = Math.floor(rem / 10);
+                    if (o > 0) parts.push(`<span class="word-t">${tens[t]}</span><span class="word-o">${ones[o]}</span>`);
+                    else parts.push(`<span class="word-t">${tens[t]}</span>`);
+                }
+            }
+            return parts.join("");
+        }
+
+        function numToEo(n) {
+            if (n === 0) return '<span class="word-o">nulo</span>';
+            const ones = ["", "unu", "du", "tri", "kvar", "kvin", "ses", "sep", "ok", "naŭ"];
+            let parts = [];
+            let th = Math.floor(n / 1000);
+            if (th > 0) parts.push(`<span class="word-th">${th === 1 ? "mil" : ones[th] + " mil"}</span>`);
+            let h = Math.floor((n % 1000) / 100);
+            if (h > 0) parts.push(`<span class="word-h">${h === 1 ? "cent" : ones[h] + "cent"}</span>`);
+            let t = Math.floor((n % 100) / 10);
+            let o = n % 10;
+            if (t > 0) parts.push(`<span class="word-t">${t === 1 ? "dek" : ones[t] + "dek"}</span>`);
+            if (o > 0) parts.push(`<span class="word-o">${ones[o]}</span>`);
+            return parts.join(" ");
+        }
+
+        function numToSw(n) {
+            if (n === 0) return '<span class="word-o">sifuri</span>';
+            const ones = ["", "moja", "mbili", "tatu", "nne", "tano", "sita", "saba", "nane", "tisa"];
+            let parts = [];
+            let th = Math.floor(n / 1000);
+            if (th > 0) parts.push(`<span class="word-th">elfu ${ones[th]}</span>`);
+            let h = Math.floor((n % 1000) / 100);
+            if (h > 0) parts.push(`<span class="word-h">mia ${ones[h]}</span>`);
+            let rem = n % 100;
+            if (rem > 0) {
+                if (rem < 10) parts.push(`<span class="word-o">${ones[rem]}</span>`);
+                else {
+                    let o = rem % 10;
+                    let t = Math.floor(rem / 10);
+                    let tenStr = t === 1 ? "kumi" : (t === 2 ? "ishirini" : (t === 3 ? "thelathini" : (t === 4 ? "arobaini" : (t === 5 ? "hamsini" : (t === 6 ? "sitini" : (t === 7 ? "sabini" : (t === 8 ? "themanini" : "tisini")))))));
+                    if (o > 0) parts.push(`<span class="word-t">${tenStr}</span> na <span class="word-o">${ones[o]}</span>`);
+                    else parts.push(`<span class="word-t">${tenStr}</span>`);
+                }
+            }
+            return parts.join(" na ");
+        }
+
+        function numToTl(n) {
+            if (n === 0) return '<span class="word-o">wala</span>';
+            const ones = ["", "isa", "dalawa", "tatlo", "apat", "lima", "anim", "pito", "walo", "siyam"];
+            const tens = ["", "sampu", "dalawampu", "tatlumpu", "apatnapu", "limampu", "animnapu", "pitumpu", "walumpu", "siyamnapu"];
+            let res = [];
+            let th = Math.floor(n / 1000);
+            if (th > 0) {
+                let thStr = th === 1 ? "isang libo" : (th === 4 || th === 6 ? ones[th] + " na libo" : ones[th] + "ng libo");
+                res.push(`<span class="word-th">${thStr}</span>`);
+            }
+            let h = Math.floor((n % 1000) / 100);
+            if (h > 0) {
+                let hStr = h === 1 ? "isang daan" : (h === 4 || h === 6 ? ones[h] + " na raan" : ones[h] + "ng daan");
+                res.push(`<span class="word-h">${hStr}</span>`);
+            }
+            let rem = n % 100;
+            if (rem > 0) {
+                if (rem < 10) res.push(`<span class="word-o">${ones[rem]}</span>`);
+                else {
+                    let o = rem % 10;
+                    let t = Math.floor(rem / 10);
+                    if (o > 0) res.push(`<span class="word-t">${tens[t]}</span>'t <span class="word-o">${ones[o]}</span>`);
+                    else res.push(`<span class="word-t">${tens[t]}</span>`);
+                }
+            }
+            return res.join(" at ");
+        }
+        
+        function numToLa(n) {
+            if (n === 0) return '<span class="word-o">nihil</span>';
+            const ones = ["", "unus", "duo", "tres", "quattuor", "quinque", "sex", "septem", "octo", "novem"];
+            const elevens = ["decem", "undecim", "duodecim", "tredecim", "quattuordecim", "quindecim", "sedecim", "septendecim", "duodeviginti", "undeviginti"];
+            const tens = ["", "decem", "viginti", "triginta", "quadraginta", "quinquaginta", "sexaginta", "septuaginta", "octoginta", "nonaginta"];
+            const hundreds = ["", "centum", "ducenti", "trecenti", "quadringenti", "quingenti", "sescenti", "septingenti", "octingenti", "nongenti"];
+            const thousands = ["", "mille", "duo milia", "tria milia", "quattuor milia", "quinque milia", "sex milia", "septem milia", "octo milia", "novem milia"];
+            let parts = [];
+            let th = Math.floor(n / 1000);
+            if (th > 0) parts.push(`<span class="word-th">${thousands[th]}</span>`);
+            let h = Math.floor((n % 1000) / 100);
+            if (h > 0) parts.push(`<span class="word-h">${hundreds[h]}</span>`);
+            let rem = n % 100;
+            if (rem > 0) {
+                if (rem < 10) parts.push(`<span class="word-o">${ones[rem]}</span>`);
+                else if (rem < 20) parts.push(`<span class="word-t">${elevens[rem - 10]}</span>`);
+                else {
+                    let o = rem % 10;
+                    let t = Math.floor(rem / 10);
+                    if (o > 0) {
+                        if (o === 8) parts.push(`<span class="word-t">duode${tens[t+1]}</span>`);
+                        else if (o === 9) parts.push(`<span class="word-t">unde${tens[t+1]}</span>`);
+                        else parts.push(`<span class="word-t">${tens[t]}</span> <span class="word-o">${ones[o]}</span>`);
+                    } else parts.push(`<span class="word-t">${tens[t]}</span>`);
+                }
+            }
+            return parts.join(" ");
+        }
+
+        function numToFi(n) {
+            if (n === 0) return '<span class="word-o">nolla</span>';
+            const ones = ["", "yksi", "kaksi", "kolme", "neljä", "viisi", "kuusi", "seitsemän", "kahdeksan", "yhdeksän"];
+            let parts = [];
+            let th = Math.floor(n / 1000);
+            if (th > 0) parts.push(`<span class="word-th">${th === 1 ? "tuhat" : ones[th] + "tuhatta"}</span>`);
+            let h = Math.floor((n % 1000) / 100);
+            if (h > 0) parts.push(`<span class="word-h">${h === 1 ? "sata" : ones[h] + "sataa"}</span>`);
+            let rem = n % 100;
+            if (rem > 0) {
+                if (rem < 10) parts.push(`<span class="word-o">${ones[rem]}</span>`);
+                else if (rem === 10) parts.push('<span class="word-t">kymmenen</span>');
+                else if (rem < 20) parts.push(`<span class="word-t">${ones[rem % 10]}toista</span>`);
+                else {
+                    let o = rem % 10;
+                    let t = Math.floor(rem / 10);
+                    if (o > 0) parts.push(`<span class="word-t">${ones[t]}kymmentä</span><span class="word-o">${ones[o]}</span>`);
+                    else parts.push(`<span class="word-t">${ones[t]}kymmentä</span>`);
+                }
+            }
+            return parts.join("");
+        }
+
+        function numToRo(n) {
+            if (n === 0) return '<span class="word-o">zero</span>';
+            const ones = ["", "unu", "doi", "trei", "patru", "cinci", "șase", "șapte", "opt", "nouă"];
+            const elevens = ["zece", "unsprezece", "doisprezece", "treisprezece", "paisprezece", "cincisprezece", "șaisprezece", "șaptesprezece", "optsprezece", "nouăsprezece"];
+            const tens = ["", "zece", "douăzeci", "treizeci", "patruzeci", "cincizeci", "șaizeci", "șaptezeci", "optzeci", "nouăzeci"];
+            let parts = [];
+            let th = Math.floor(n / 1000);
+            if (th > 0) parts.push(`<span class="word-th">${th === 1 ? "o mie" : (th === 2 ? "două mii" : ones[th] + " mii")}</span>`);
+            let h = Math.floor((n % 1000) / 100);
+            if (h > 0) parts.push(`<span class="word-h">${h === 1 ? "o sută" : (h === 2 ? "două sute" : ones[h] + " sute")}</span>`);
+            let rem = n % 100;
+            if (rem > 0) {
+                if (rem < 10) parts.push(`<span class="word-o">${ones[rem]}</span>`);
+                else if (rem < 20) parts.push(`<span class="word-t">${elevens[rem - 10]}</span>`);
+                else {
+                    let o = rem % 10;
+                    let t = Math.floor(rem / 10);
+                    if (o > 0) parts.push(`<span class="word-t">${tens[t]}</span> și <span class="word-o">${ones[o]}</span>`);
+                    else parts.push(`<span class="word-t">${tens[t]}</span>`);
+                }
+            }
+            return parts.join(" ");
+        }
+
+        function numToArabic(n) {
+            if (n === 0) return '<span class="word-o">صفر</span>';
+            const ones = ["", "واحد", "اثنان", "ثلاثة", "أربعة", "خمسة", "ستة", "سبعة", "ثمانية", "تسعة"];
+            const elevens = ["عشرة", "أحد عشر", "اثنا عشر", "ثلاثة عشر", "أربعة عشر", "خمسة عشر", "ستة عشر", "سبعة عشر", "ثمانية عشر", "تسعة عشر"];
+            const tens = ["", "عشرة", "عشرون", "ثلاثون", "أربعون", "خمسون", "ستون", "سبعون", "ثمانون", "تسعون"];
+            const hundreds = ["", "مائة", "مائتان", "ثلاثمائة", "أربعمائة", "خمسمائة", "ستمائة", "سبعمائة", "ثمانمائة", "تسعمائة"];
+            const thousands = ["", "ألف", "ألفان", "ثلاثة آلاف", "أربعة آلاف", "خمسة آلاف", "ستة آلاف", "سبعة آلاف", "ثمانية آلاف", "تسعة آلاف"];
+            let parts = [];
+            let th = Math.floor(n / 1000);
+            if (th > 0) parts.push(`<span class="word-th">${thousands[th]}</span>`);
+            let h = Math.floor((n % 1000) / 100);
+            if (h > 0) parts.push(`<span class="word-h">${hundreds[h]}</span>`);
+            let rem = n % 100;
+            if (rem > 0) {
+                if (rem < 10) parts.push(`<span class="word-o">${ones[rem]}</span>`);
+                else if (rem < 20) parts.push(`<span class="word-t">${elevens[rem - 10]}</span>`);
+                else {
+                    let o = rem % 10;
+                    let t = Math.floor(rem / 10);
+                    if (o > 0) parts.push(`<span class="word-o">${ones[o]}</span> و<span class="word-t">${tens[t]}</span>`);
+                    else parts.push(`<span class="word-t">${tens[t]}</span>`);
+                }
+            }
+            return parts.join(" و");
+        }
+
+        function numToKu(n) {
+            if (n === 0) return '<span class="word-o">سفر</span>';
+            const ones = ["", "یەک", "دوو", "سێ", "چوار", "پێنج", "شەش", "حەوت", "هەشت", "نۆ"];
+            const elevens = ["دە", "یازدە", "دوانزە", "سیانزە", "چواردە", "پانزە", "شانزە", "حەڤدە", "هەژدە", "نۆزدە"];
+            const tens = ["", "دە", "بیست", "سی", "چل", "پەنجا", "شەست", "حەفتا", "هەشتا", "نەوەد"];
+            const hundreds = ["", "سەد", "دووسەد", "سێسەد", "چوارسەد", "پێنجسەد", "شەشسەد", "حەوتسەد", "هەشتسەد", "نۆسەد"];
+            let parts = [];
+            let th = Math.floor(n / 1000);
+            if (th > 0) parts.push(`<span class="word-th">${th === 1 ? "هەزار" : ones[th] + " هەزار"}</span>`);
+            let h = Math.floor((n % 1000) / 100);
+            if (h > 0) parts.push(`<span class="word-h">${hundreds[h]}</span>`);
+            let rem = n % 100;
+            if (rem > 0) {
+                if (rem < 10) parts.push(`<span class="word-o">${ones[rem]}</span>`);
+                else if (rem < 20) parts.push(`<span class="word-t">${elevens[rem - 10]}</span>`);
+                else {
+                    let o = rem % 10;
+                    let t = Math.floor(rem / 10);
+                    if (o > 0) parts.push(`<span class="word-t">${tens[t]}</span> و <span class="word-o">${ones[o]}</span>`);
+                    else parts.push(`<span class="word-t">${tens[t]}</span>`);
+                }
+            }
+            return parts.join(" و ");
+        }
+
+        function numToAmharic(n) {
+            if (n === 0) return '<span class="word-o">ዜሮ</span>';
+            const ones = ["", "አንድ", "ሁለት", "ሦስት", "አራት", "አምስት", "ስድስት", "ሰባት", "ስምንት", "ዘጠኝ"];
+            const tens = ["", "አሥር", "ሃያ", "ሠላሳ", "አርባ", "ኃምሳ", "ስልሳ", "ሰባ", "ሰማንያ", "ዘጠና"];
+            const asra = ["", "አሥራ አንድ", "አሥራ ሁለት", "አሥራ ሦስት", "አሥራ አራት", "አሥራ አምስት", "አሥራ ስድስት", "አሥራ ሰባት", "አሥራ ስምንት", "አሥራ ዘጠኝ"];
+            let parts = [];
+            let th = Math.floor(n / 1000);
+            if (th > 0) parts.push(`<span class="word-th">${(th === 1 ? "አንድ" : ones[th]) + " ሺህ"}</span>`);
+            let h = Math.floor((n % 1000) / 100);
+            if (h > 0) parts.push(`<span class="word-h">${(h === 1 ? "መቶ" : ones[h] + " መቶ")}</span>`);
+            let t = Math.floor((n % 100) / 10);
+            let o = n % 10;
+            if (t === 1 && o > 0) parts.push(`<span class="word-t">${asra[o]}</span>`);
+            else {
+                if (t > 0) parts.push(`<span class="word-t">${tens[t]}</span>`);
+                if (o > 0) parts.push(`<span class="word-o">${ones[o]}</span>`);
+            }
+            return parts.join(" ");
+        }
+
+        function numToRu(n) {
+            if (n === 0) return '<span class="word-o">ноль</span>';
+            const ones = ["", "один", "два", "три", "четыре", "пять", "шесть", "семь", "восемь", "девять"];
+            const elevens = ["десять", "одиннадцать", "двенадцать", "тринадцать", "четырнадцать", "пятнадцать", "шестнадцать", "семнадцать", "восемнадцать", "девятнадцать"];
+            const tens = ["", "десять", "двадцать", "тридцать", "сорок", "пятьдесят", "шестьдесят", "семьдесят", "восемьдесят", "девяносто"];
+            const hundreds = ["", "сто", "двести", "триста", "четыреста", "пятьсот", "шестьсот", "семьсот", "восемьсот", "девятьсот"];
+            const thousands = ["", "одна тысяча", "две тысячи", "три тысячи", "четыре тысячи", "пять тысяч", "шесть тысяч", "семь тысяч", "восемь тысяч", "девять тысяч"];
+            let parts = [];
+            let th = Math.floor(n / 1000);
+            if (th > 0) parts.push(`<span class="word-th">${thousands[th]}</span>`);
+            let h = Math.floor((n % 1000) / 100);
+            if (h > 0) parts.push(`<span class="word-h">${hundreds[h]}</span>`);
+            let rem = n % 100;
+            if (rem > 0) {
+                if (rem < 10) parts.push(`<span class="word-o">${ones[rem]}</span>`);
+                else if (rem < 20) parts.push(`<span class="word-t">${elevens[rem - 10]}</span>`);
+                else {
+                    let o = rem % 10;
+                    let t = Math.floor(rem / 10);
+                    parts.push(`<span class="word-t">${tens[t]}</span>`);
+                    if (o > 0) parts.push(`<span class="word-o">${ones[o]}</span>`);
+                }
+            }
+            return parts.join(" ");
+        }
+
+        function numToVi(n) {
+            if (n === 0) return '<span class="word-o">không</span>';
+            const ones = ["", "một", "hai", "ba", "bốn", "năm", "sáu", "bảy", "tám", "chín"];
+            let parts = [];
+            let th = Math.floor(n / 1000);
+            if (th > 0) parts.push(`<span class="word-th">${ones[th]} nghìn</span>`);
+            let h = Math.floor((n % 1000) / 100);
+            let rem = n % 100;
+            if (h > 0) {
+                parts.push(`<span class="word-h">${ones[h]} trăm</span>`);
+                if (rem > 0 && rem < 10) parts.push("lẻ");
+            } else if (th > 0 && rem > 0) {
+                parts.push('<span class="word-h">không trăm</span>');
+                if (rem < 10) parts.push("lẻ");
+            }
+            if (rem > 0) {
+                let t = Math.floor(rem / 10);
+                let o = rem % 10;
+                if (t === 1) parts.push('<span class="word-t">mười</span>');
+                else if (t > 1) parts.push(`<span class="word-t">${ones[t]} mươi</span>`);
+
+                if (o > 0) {
+                    let oStr = (o === 1 && t > 1) ? "mốt" : ((o === 5 && t > 0) ? "lăm" : ones[o]);
+                    parts.push(`<span class="word-o">${oStr}</span>`);
+                }
+            }
+            return parts.join(" ");
+        }
+
+        function numToId(n) {
+            if (n === 0) return '<span class="word-o">nol</span>';
+            const ones = ["", "satu", "dua", "tiga", "empat", "lima", "enam", "tujuh", "delapan", "sembilan"];
+            let parts = [];
+            let th = Math.floor(n / 1000);
+            if (th > 0) parts.push(`<span class="word-th">${th === 1 ? "seribu" : ones[th] + " ribu"}</span>`);
+            let h = Math.floor((n % 1000) / 100);
+            if (h > 0) parts.push(`<span class="word-h">${h === 1 ? "seratus" : ones[h] + " ratus"}</span>`);
+            let rem = n % 100;
+            if (rem > 0) {
+                if (rem === 10) parts.push('<span class="word-t">sepuluh</span>');
+                else if (rem === 11) parts.push('<span class="word-t">sebelas</span>');
+                else if (rem < 20) parts.push(`<span class="word-t">${ones[rem % 10]} belas</span>`);
+                else {
+                    let o = rem % 10;
+                    let t = Math.floor(rem / 10);
+                    parts.push(`<span class="word-t">${ones[t]} puluh</span>`);
+                    if (o > 0) parts.push(`<span class="word-o">${ones[o]}</span>`);
+                }
+            }
+            return parts.join(" ");
+        }
+
+        function numToTr(n) {
+            if (n === 0) return '<span class="word-o">sıfır</span>';
+            const ones = ["", "bir", "iki", "üç", "dört", "beş", "altı", "yedi", "sekiz", "dokuz"];
+            const tens = ["", "on", "yirmi", "otuz", "kırk", "elli", "altmış", "yetmiş", "seksen", "doksan"];
+            let parts = [];
+            let th = Math.floor(n / 1000);
+            if (th > 0) parts.push(`<span class="word-th">${th === 1 ? "bin" : ones[th] + " bin"}</span>`);
+            let h = Math.floor((n % 1000) / 100);
+            if (h > 0) parts.push(`<span class="word-h">${h === 1 ? "yüz" : ones[h] + " yüz"}</span>`);
+            let t = Math.floor((n % 100) / 10);
+            let o = n % 10;
+            if (t > 0) parts.push(`<span class="word-t">${tens[t]}</span>`);
+            if (o > 0) parts.push(`<span class="word-o">${ones[o]}</span>`);
+            return parts.join(" ");
+        }
+
+        function numToEl(n) {
+            if (n === 0) return '<span class="word-o">μηδέν</span>';
+            const ones = ["", "ένα", "δύο", "τρία", "τέσσερα", "πέντε", "έξι", "επτά", "οκτώ", "εννέα"];
+            const elevens = ["δέκα", "έντεκα", "δώδεκα", "δεκατρία", "δεκατέσσερα", "δεκαπέντε", "δεκαέξι", "δεκαεπτά", "δεκαοκτώ", "δεκαεννέα"];
+            const tens = ["", "δέκα", "είκοσι", "τριάντα", "σαράντα", "πενήντα", "εξήντα", "εβδομήντα", "ογδόντα", "ενενήντα"];
+            const hundreds = ["", "εκατό", "διακόσια", "τριακόσια", "τετρακόσια", "πεντακόσια", "εξακόσια", "επτακόσια", "οκτακόσια", "εννιακόσια"];
+            const thousands = ["", "χίλια", "δύο χιλιάδες", "τρεις χιλιάδες", "τέσσερις χιλιάδες", "πέντε χιλιάδες", "έξι χιλιάδες", "επτά χιλιάδες", "οκτώ χιλιάδες", "εννέα χιλιάδες"];
+            let parts = [];
+            let th = Math.floor(n / 1000);
+            if (th > 0) parts.push(`<span class="word-th">${thousands[th]}</span>`);
+            let h = Math.floor((n % 1000) / 100);
+            if (h > 0) {
+                let hStr = (h === 1 && (n % 100) > 0) ? "εκατόν" : hundreds[h];
+                parts.push(`<span class="word-h">${hStr}</span>`);
+            }
+            let rem = n % 100;
+            if (rem > 0) {
+                if (rem < 10) parts.push(`<span class="word-o">${ones[rem]}</span>`);
+                else if (rem < 20) parts.push(`<span class="word-t">${elevens[rem - 10]}</span>`);
+                else {
+                    let o = rem % 10;
+                    let t = Math.floor(rem / 10);
+                    parts.push(`<span class="word-t">${tens[t]}</span>`);
+                    if (o > 0) parts.push(`<span class="word-o">${ones[o]}</span>`);
+                }
+            }
+            return parts.join(" ");
+        }
+
+        function numToEn(n) {
+            if (n === 0) return '<span class="word-o">zero</span>';
+            const ones = ["", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"];
+            const tens = ["", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"];
+            let parts = [];
+            let th = Math.floor(n / 1000);
+            if (th > 0) parts.push(`<span class="word-th">${ones[th]} thousand</span>`);
+            let h = Math.floor((n % 1000) / 100);
+            if (h > 0) parts.push(`<span class="word-h">${ones[h]} hundred</span>`);
+            let rem = n % 100;
+            if (rem > 0) {
+                if (rem < 20) {
+                    if (rem < 10) parts.push(`<span class="word-o">${ones[rem]}</span>`);
+                    else parts.push(`<span class="word-t">${ones[rem]}</span>`);
+                } else {
+                    let t = Math.floor(rem / 10);
+                    let o = rem % 10;
+                    if (o === 0) parts.push(`<span class="word-t">${tens[t]}</span>`);
+                    else parts.push(`<span class="word-t">${tens[t]}</span>-<span class="word-o">${ones[o]}</span>`);
+                }
+            }
+            return parts.join(" ");
+        }
+
+        function numToIt(n) {
+            if (n === 0) return '<span class="word-o">zero</span>';
+            const ones = ["", "uno", "due", "tre", "quattro", "cinque", "sei", "sette", "otto", "nove", "dieci", "undici", "dodici", "tredici", "quattordici", "quindici", "sedici", "diciassette", "diciotto", "diciannove"];
+            const tens = ["", "", "venti", "trenta", "quaranta", "cinquanta", "sessanta", "settanta", "ottanta", "novanta"];
+            let parts = [];
+            let th = Math.floor(n / 1000);
+            if (th > 0) parts.push(`<span class="word-th">${th === 1 ? "mille" : ones[th] + "mila"}</span>`);
+            let h = Math.floor((n % 1000) / 100);
+            if (h > 0) parts.push(`<span class="word-h">${h === 1 ? "cento" : ones[h] + "cento"}</span>`);
+            let rem = n % 100;
+            if (rem > 0) {
+                if (rem < 20) {
+                    if (rem < 10) parts.push(`<span class="word-o">${ones[rem]}</span>`);
+                    else parts.push(`<span class="word-t">${ones[rem]}</span>`);
+                } else {
+                    let t = tens[Math.floor(rem / 10)];
+                    let o = rem % 10;
+                    if (o === 1 || o === 8) t = t.slice(0, -1);
+                    if (o === 0) parts.push(`<span class="word-t">${t}</span>`);
+                    else parts.push(`<span class="word-t">${t}</span><span class="word-o">${o === 3 ? "tré" : ones[o]}</span>`);
+                }
+            }
+            return parts.join(" ");
+        }
+
+        function numToFr(n) {
+            if (n === 0) return '<span class="word-o">zéro</span>';
+            const ones = ["", "un", "deux", "trois", "quatre", "cinq", "six", "sept", "huit", "neuf", "dix", "onze", "douze", "treize", "quatorze", "quinze", "seize", "dix-sept", "dix-huit", "dix-neuf"];
+            const tens = ["", "", "vingt", "trente", "quarante", "cinquante", "soixante"];
+            let parts = [];
+            let th = Math.floor(n / 1000);
+            if (th > 0) parts.push(`<span class="word-th">${th === 1 ? "mille" : ones[th] + " mille"}</span>`);
+            let h = Math.floor((n % 1000) / 100);
+            let rem = n % 100;
+            if (h > 0) {
+                let hStr = h === 1 ? "cent" : ones[h] + " cent" + (rem === 0 ? "s" : "");
+                parts.push(`<span class="word-h">${hStr}</span>`);
+            }
+            if (rem > 0) {
+                if (rem >= 80) {
+                    let o = rem - 80;
+                    let str = "quatre-vingt" + (o === 0 ? "s" : "-" + ones[o]);
+                    parts.push(`<span class="word-t">${str}</span>`);
+                } else if (rem >= 70) {
+                    let o = rem - 60;
+                    let str = (o === 11) ? "soixante-et-onze" : "soixante-" + ones[o];
+                    parts.push(`<span class="word-t">${str}</span>`);
+                } else if (rem >= 20) {
+                    let t = tens[Math.floor(rem / 10)];
+                    let o = rem % 10;
+                    if (o === 1) parts.push(`<span class="word-t">${t}-et-un</span>`);
+                    else if (o > 0) parts.push(`<span class="word-t">${t}</span>-<span class="word-o">${ones[o]}</span>`);
+                    else parts.push(`<span class="word-t">${t}</span>`);
+                } else {
+                    if (rem < 10) parts.push(`<span class="word-o">${ones[rem]}</span>`);
+                    else parts.push(`<span class="word-t">${ones[rem]}</span>`);
+                }
+            }
+            return parts.join(" ");
+        }
+
+        function numToDe(n) {
+            if (n === 0) return '<span class="word-o">null</span>';
+            const ones = ["", "ein", "zwei", "drei", "vier", "fünf", "sechs", "sieben", "acht", "neun", "zehn", "elf", "zwölf", "dreizehn", "vierzehn", "fünfzehn", "sechzehn", "siebzehn", "achtzehn", "neunzehn"];
+            const tens = ["", "", "zwanzig", "dreißig", "vierzig", "fünfzig", "sechzig", "siebzig", "achtzig", "neunzig"];
+            let parts = [];
+            let th = Math.floor(n / 1000);
+            if (th > 0) parts.push(`<span class="word-th">${ones[th]}tausend</span>`);
+            let h = Math.floor((n % 1000) / 100);
+            if (h > 0) parts.push(`<span class="word-h">${ones[h]}hundert</span>`);
+            let rem = n % 100;
+            if (rem > 0) {
+                if (rem < 20) {
+                    let oStr = (rem === 1) ? "eins" : ones[rem];
+                    if (rem < 10) parts.push(`<span class="word-o">${oStr}</span>`);
+                    else parts.push(`<span class="word-t">${oStr}</span>`);
+                } else {
+                    let o = rem % 10;
+                    let t = Math.floor(rem / 10);
+                    if (o > 0) parts.push(`<span class="word-o">${ones[o]}</span>und<span class="word-t">${tens[t]}</span>`);
+                    else parts.push(`<span class="word-t">${tens[t]}</span>`);
+                }
+            }
+            return parts.join("");
+        }
+
+        function drawDigit(digit, startX, startY, xDir, yDir, w, h, strokeColor, glowColor) {
+            if (digit === 0) return;
+
+            ctx.shadowBlur = 18;
+            ctx.shadowColor = glowColor;
+            ctx.strokeStyle = strokeColor;
+
+            const ex = startX + w * xDir;
+            const ey = startY + h * yDir;
+
+            ctx.beginPath();
+            if (digit === 1) { ctx.moveTo(startX, startY); ctx.lineTo(ex, startY); }
+            if (digit === 2) { ctx.moveTo(startX, ey); ctx.lineTo(ex, ey); }
+            if (digit === 3) { ctx.moveTo(startX, startY); ctx.lineTo(ex, ey); }
+            if (digit === 4) { ctx.moveTo(ex, startY); ctx.lineTo(startX, ey); }
+            if (digit === 5) { ctx.moveTo(startX, startY); ctx.lineTo(ex, startY); ctx.moveTo(ex, startY); ctx.lineTo(startX, ey); }
+            if (digit === 6) { ctx.moveTo(ex, startY); ctx.lineTo(ex, ey); }
+            if (digit === 7) { ctx.moveTo(startX, startY); ctx.lineTo(ex, startY); ctx.moveTo(ex, startY); ctx.lineTo(ex, ey); }
+            if (digit === 8) { ctx.moveTo(ex, startY); ctx.lineTo(ex, ey); ctx.moveTo(startX, ey); ctx.lineTo(ex, ey); }
+            if (digit === 9) { ctx.moveTo(startX, startY); ctx.lineTo(ex, startY); ctx.moveTo(ex, startY); ctx.lineTo(ex, ey); ctx.moveTo(startX, ey); ctx.lineTo(ex, ey); }
+            ctx.stroke();
+        }
+
+        function drawCistercian(num) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            ctx.lineWidth = 14;
+
+            const x1 = 250, y1 = 100, x2 = 250, y2 = 400;
+            const w = 90, h = 90;
+
+            // Haste central (Branco com brilho elegante)
+            ctx.shadowBlur = 12;
+            ctx.shadowColor = 'rgba(241, 245, 249, 0.4)';
+            ctx.strokeStyle = '#f1f5f9';
+            ctx.beginPath();
+            ctx.moveTo(x1, y1);
+            ctx.lineTo(x2, y2);
+            ctx.stroke();
+
+            const ones = num % 10;
+            const tens = Math.floor((num % 100) / 10);
+            const hundreds = Math.floor((num % 1000) / 100);
+            const thousands = Math.floor(num / 1000);
+
+            // Cores dedicadas para cada grandeza:
+            // Unidades: Ciano (#38bdf8) | Dezenas: Esmeralda (#34d399) | Centenas: Ouro (#fbbf24) | Milhares: Púrpura (#c084fc)
+            drawDigit(ones,      x1, y1,  1,  1, w, h, '#38bdf8', 'rgba(56, 189, 248, 0.8)');
+            drawDigit(tens,      x1, y1, -1,  1, w, h, '#34d399', 'rgba(52, 211, 153, 0.8)');
+            drawDigit(hundreds,  x2, y2,  1, -1, w, h, '#fbbf24', 'rgba(251, 191, 36, 0.8)');
+            drawDigit(thousands, x2, y2, -1, -1, w, h, '#c084fc', 'rgba(192, 132, 252, 0.8)');
+
+            // Remove o glow para outros desenhos
+            ctx.shadowBlur = 0;
+        }
+
+        function cycleDigit(place, amount) {
+            mouseModeToggle.checked = false; // Desativa o mouse para não apagar a edição
+
+            let digit = Math.floor((currentNumber / place) % 10);
+            let nextDigit = (digit + amount + 10) % 10; // +10 previne modulos negativos no JS
+            currentNumber = currentNumber - (digit * place) + (nextDigit * place);
+
+            renderHUD(currentNumber);
+            drawCistercian(currentNumber);
+        }
+
+        canvas.addEventListener('mousemove', (e) => {
+            if (!mouseModeToggle.checked) return; // Só mapeia se a checkbox estiver marcada
+
+            const rect = canvas.getBoundingClientRect();
+            const x = Math.max(0, Math.min(e.clientX - rect.left, 500));
+            const y = Math.max(0, Math.min(e.clientY - rect.top, 499));
+
+            const row = Math.floor(y / 5);
+            const number = Math.floor((x / 500) * 100) + row * 100;
+            const newNum = Math.max(0, Math.min(number, 9999));
+
+            if (newNum === currentNumber) return;
+            currentNumber = newNum;
+
+            renderHUD(currentNumber);
+            drawCistercian(currentNumber);
+        });
+
+        // Initial draw
+        renderHUD(0);
+        drawCistercian(0);
+    </script>
+</body>
+
+</html>
