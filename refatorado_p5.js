@@ -9,10 +9,9 @@ function setup() {
 function draw() {
   background(220);
   
-  // 1. Calcula o número baseado no mouse em 1 linha de matemática
-  // A tela tem 700px. Dividimos o Y por 7 para saber em qual "bloco" de 100 estamos.
-  let row = Math.floor(constrain(mouseY, 0, 699) / 7);
-  let number = Math.floor(map(constrain(mouseX, 0, 700), 0, 700, row * 100, (row + 1) * 100));
+  // 1. Calcula o número usando um random seed baseado na posição do mouse
+  randomSeed(mouseX * width + mouseY);
+  let number = Math.floor(random(10000));
   number = constrain(number, 0, 9999);
   
   // 2. Extrai os dígitos (unidade, dezena, centena, milhar)
